@@ -1,0 +1,24 @@
+<!-- GTM web container, tag 1: "Hardal - Tracker", Custom HTML, trigger All Pages. Fake IDs. -->
+<script
+  async
+  src="https://analytics.example.com/tracker.js"
+  data-tenant-id="11111111-1111-4111-8111-111111111111"
+  data-source-id="22222222-2222-4222-8222-222222222222">
+</script>
+
+<!-- GTM web container, tag 2: "Hardal - purchase", Custom HTML, trigger: Custom Event "purchase".
+     Waits for the tracker because starting tag 1 only begins the download. -->
+<script>
+(function send(tries) {
+  if (window.hrd && typeof window.hrd.track === "function") {
+    window.hrd.track("purchase", {
+      transaction_id: {{DLV - ecommerce.transaction_id}},
+      value: {{DLV - ecommerce.value}},
+      currency: {{DLV - ecommerce.currency}},
+      items: {{DLV - ecommerce.items}}
+    });
+  } else if (tries < 50) {
+    setTimeout(function () { send(tries + 1); }, 100);
+  }
+})(0);
+</script>

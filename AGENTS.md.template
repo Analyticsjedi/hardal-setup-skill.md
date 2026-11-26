@@ -1,0 +1,14 @@
+## Analytics: Hardal
+
+This project sends analytics to Hardal (https://app.hardal.ai). Follow these rules when you add or change tracking.
+
+- **Install:** the tracker is loaded once in `{{TRACKER_FILE}}` from `{{COLLECTION_URL}}/tracker.js`. Do not add a second copy, and do not add Hardal in Google Tag Manager as well.
+- **IDs:** Tenant ID `{{TENANT_ID}}`, Source ID `{{SOURCE_ID}}` (public values), configured in `{{CONFIG_LOCATION}}`.
+- **Install path:** {{PATH}} (tracker in code / GTM web / server-side GTM with Hardal S2S).
+- **Page views:** automatic, including route changes. Do not send `page_view` manually. If automatic tracking is off, use `hrd.pageview()`.
+- **Calling the API:** use the helpers in `{{HELPER_FILE}}` (`hardalTrack`, `hardalIdentify`, `hardalConsent`). The tracker has no pre-load queue.
+- **Consent:** {{CONSENT_SUMMARY}} (for example: "the banner analytics category maps to hrd.consent in src/lib/consent.ts; the tracker loads before the decision in anonymous mode"). Never call identify without granted consent. Ask before changing the consent banner.
+- **Events in use:**
+{{EVENT_TABLE}}
+- **Naming:** use Hardal standard event names (https://docs.usehardal.com/setup/events/standard-events) when one fits; otherwise `snake_case` custom names with stable parameter types. No personal data in event parameters.
+- **Verify:** a `POST /collect/` returns `202`; then check the **Data is flowing** card or **Engagement → Events** in Hardal for the same source. Support: support@usehardal.com.
